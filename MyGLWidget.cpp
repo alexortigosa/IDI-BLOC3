@@ -60,7 +60,7 @@ void MyGLWidget::createBuffers ()
 {
   // Carreguem el model de l'OBJ - Atenció! Abans de crear els buffers!
   //patr.load("/assig/idi/models/Patricio.obj");
-  patr.load("/assig/idi/models/Patricio.obj");
+  patr.load("./models/Patricio.obj");
 
   // Calculem la capsa contenidora del model
   calculaCapsaModel ();
@@ -146,9 +146,9 @@ void MyGLWidget::createBuffers ()
   };
 
   // Definim el material del terra
-  glm::vec3 amb(0.2,0,0.2);
-  glm::vec3 diff(0.8,0,0.8);
-  glm::vec3 spec(0,0,0);
+  glm::vec3 amb(0,0,0.2);
+  glm::vec3 diff(0,0,0.8);
+  glm::vec3 spec(0,0,1);
   float shin = 100;
 
   // Fem que aquest material afecti a tots els vèrtexs per igual
