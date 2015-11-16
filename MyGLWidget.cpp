@@ -23,6 +23,7 @@ void MyGLWidget::initializeGL ()
   glEnable(GL_DEPTH_TEST);
   carregaShaders ();
   createBuffers ();
+  setFocusParams ();
   projectTransform ();
   viewTransform ();
 }
@@ -259,6 +260,8 @@ void MyGLWidget::carregaShaders ()
   transLoc = glGetUniformLocation (program->programId(), "TG");
   projLoc = glGetUniformLocation (program->programId(), "proj");
   viewLoc = glGetUniformLocation (program->programId(), "view");
+  posFocLoc = glGetUniformLocation (program->programId(), "posFoc");
+  colFocLoc = glGetUniformLocation (program->programId(), "colFoc");
 }
 
 void MyGLWidget::modelTransformPatricio ()
@@ -269,6 +272,27 @@ void MyGLWidget::modelTransformPatricio ()
   
   glUniformMatrix4fv (transLoc, 1, GL_FALSE, &TG[0][0]);
 }
+
+void MyGLWidget::setFocusParams ()
+{
+  posFocus = glm::vec3(1.,1.,1.);
+  colFocus = glm::vec3(0.8,0.8,0.8);
+
+  
+  glUniform3fv (posFocLoc, 1, &posFocus[0]);
+   glUniform3fv (colFocLoc, 1, &colFocus[0]);
+}
+
+void MyGLWidget::movePos (int cont)
+{
+  if (cont<0) posFocus = glm::vec3(posFocus[0]+1.,posFocus[1],posFocus[2]);
+  else posFocus = glm::vec3(posFocus[0]-1.,posFocus[1],posFocus[2]);
+  
+  glUniform3fv (posFocLoc, 1, &posFocus[0]);
+  
+}
+
+
 
 void MyGLWidget::modelTransformTerra ()
 {
@@ -327,6 +351,13 @@ void MyGLWidget::keyPressEvent (QKeyEvent *e)
   {
     case Qt::Key_Escape:
         exit(0);
+        break;
+    case Qt::Key_K:
+        movePos(-1);
+        break;
+    case Qt::Key_L:
+        movePos(1);
+        break;
 
     default: e->ignore(); break;
   }

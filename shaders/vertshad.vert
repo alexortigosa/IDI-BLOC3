@@ -1,4 +1,4 @@
-# version 330 core
+#version 330 core
 
 in vec3 vertex;
 in vec3 normal;
@@ -11,6 +11,9 @@ in float matshin;
 uniform mat4 proj;
 uniform mat4 view;
 uniform mat4 TG;
+uniform vec3 posFoc;
+uniform vec3 colFoc;
+
 
 // Valors per als components que necessitem dels focus de llum
 vec3 colFocus = vec3(0.8, 0.8, 0.8);
@@ -58,6 +61,8 @@ void main()
 {
     
     //fcolor = matdiff;
+    colFocus=colFoc;
+    posFocus=posFoc;
     vec4 posVertSCO = view*TG*vec4(vertex,1.0);
     vec4 posF = view*vec4(posFocus,1.0);
     vec4 L = posF - posVertSCO;
